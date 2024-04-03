@@ -1,0 +1,66 @@
+{
+    "num_pages" : 2,
+    "pages" : [
+        {
+            "pageName" : "Page 1",
+            "fields": [
+                {
+                    "field_name": "name",
+                    "field_type": "textinput",
+                    "field_label": "Please enter your name",
+                    "field_optional": false,
+                    "field_options" : null,
+                    "field_options_max": null,
+                    "field_options_createable": false,
+                    "field_validation": "string"
+                },
+                {
+                    "field_name": "gender",
+                    "field_type": "select",
+                    "field_label": "Please select your gender",
+                    "field_optional": false,
+                    "field_options" : ["M", "F", "Nonbinary"],
+                    "field_options_createable": false,
+                    "field_options_max": 1,
+                    "field_validation": "string"
+                },
+                {
+                    "field_name": "age",
+                    "field_type": "textinput",
+                    "field_label": "Please enter your age",
+                    "field_optional": false,
+                    "field_options" : null,
+                    "field_options_max": null,
+                    "field_options_createable": false,
+                    "field_validation": "integer"
+                }
+            ]
+        },
+        {
+            "pageName" : "Page 2",
+            "fields": [
+                {
+                    "field_name": "profession",
+                    "field_type": "select",
+                    "field_label": "Please select your profession. Start typing to enter a custom value",
+                    "field_optional": false,
+                    "field_options" : ["Owner", "Agent", "Seller", "Buyer"],
+                    "field_options_max": 1,
+                    "field_options_createable": true,
+                    "field_validation": "string"
+                },
+                {
+                    "field_name": "services",
+                    "field_type": "textinput",
+                    "field_label": "Please enter the services you are looking for? (Seperate by a comma)",
+                    "field_optional": true,
+                    "field_options" : null,
+                    "field_options_max": null,
+                    "field_options_createable": false,
+                    "field_validation": "string"
+                }
+            ]
+        }
+    ],
+    "timeout": 1800000
+}

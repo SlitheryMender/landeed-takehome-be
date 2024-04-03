@@ -2,8 +2,6 @@ import express from "express";
 import path from 'path';
 import bodyParser from 'body-parser';
 // import http from 'http';
-import { initializeDB } from "./config/database.config";
-import { getEntries, insertEntry } from "./services/db.services";
 import jsonfile from 'jsonfile';
 import cors from 'cors';
 import fs from "fs";
@@ -11,7 +9,7 @@ import fs from "fs";
 const app = express();
 const port = 8080;
 
-initializeDB();
+// initializeDB();
 // console.log(process.env);
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -71,6 +69,38 @@ app.get('/config', async (req: Request, res: Response) => {
     return res.status(400).send(new Error("Error in backend"));
   }
 })
+
+app.get('/defaultconfig', async (req: Request, res: Response) => {
+  try {
+    let file = path.resolve(__dirname, 'default.config.json');
+    let config = await jsonfile.readFile(file);
+    // console.log(file, config);
+    return res.status(200).send(config);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send(new Error("Error in backend"));
+  }
+})
+
+app.post('/newconfig', async (req: Request, res: Response) => {
+  try {
+    
+    let file = path.resolve(__dirname, 'config.json');
+
+    let uploadData = req.body;
+    
+    // let fields = config.pages.reduce((allfields, ))
+
+    // let {name, gender, age, profession, services} = req.body;
+    await jsonfile.writeFile(file, uploadData,{encoding:'utf8',flag:'w'});
+    // let data = await insertEntry({name, gender, age, profession, services});
+    return res.status(200).send({status: 'done'});
+  } catch (error) {
+    return res.status(400).send(new Error("Error in backend"));
+  }
+});
+
+
 
   app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
