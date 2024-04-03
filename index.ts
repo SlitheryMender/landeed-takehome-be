@@ -6,6 +6,8 @@ import jsonfile from 'jsonfile';
 import cors from 'cors';
 import fs from "fs";
 import { validateInputs } from "./services/validate.service";
+import { ConfigData } from "./types/fields.types";
+import { CreateEntryData } from "./types/entry.types";
 
 const app = express();
 const port = 8080;
@@ -32,11 +34,14 @@ app.post('/entry', async (req: Request, res: Response) => {
         // Do something
     }
 
-    let isDataValid = await validateInputs(req.body);
+    let file2 = path.resolve(__dirname, 'config.json');
+    let config: ConfigData = await jsonfile.readFile(file2);
+        
 
+    let isDataValid = await validateInputs(req.body, config);
+    console.log({isDataValid});
     if(isDataValid) {
       let uploadData = data ? [...data, req.body] : [req.body];
-    
     
       // let fields = config.pages.reduce((allfields, ))
 
@@ -48,6 +53,7 @@ app.post('/entry', async (req: Request, res: Response) => {
       return res.status(400).send({status: "error", msg: "Invalid data"});
     }
   } catch (error) {
+    console.log(error);
     return res.status(400).send(new Error("Error in backend"));
   }
 });
