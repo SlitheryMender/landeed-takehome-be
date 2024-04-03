@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
 import fs from "fs";
+import { validateInputs } from "./services/validate.service";
 
 const app = express();
 const port = 8080;
@@ -31,14 +32,21 @@ app.post('/entry', async (req: Request, res: Response) => {
         // Do something
     }
 
-    let uploadData = data ? [...data, req.body] : [req.body];
-    
-    // let fields = config.pages.reduce((allfields, ))
+    let isDataValid = await validateInputs(req.body);
 
-    // let {name, gender, age, profession, services} = req.body;
-    await jsonfile.writeFile(file, uploadData,{encoding:'utf8',flag:'w'});
-    // let data = await insertEntry({name, gender, age, profession, services});
-    return res.status(200).send({status: 'done'});
+    if(isDataValid) {
+      let uploadData = data ? [...data, req.body] : [req.body];
+    
+    
+      // let fields = config.pages.reduce((allfields, ))
+
+      // let {name, gender, age, profession, services} = req.body;
+      await jsonfile.writeFile(file, uploadData,{encoding:'utf8',flag:'w'});
+      // let data = await insertEntry({name, gender, age, profession, services});
+      return res.status(200).send({status: 'done'});
+    } else {
+      return res.status(400).send({status: "error", msg: "Invalid data"});
+    }
   } catch (error) {
     return res.status(400).send(new Error("Error in backend"));
   }
