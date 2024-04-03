@@ -42,7 +42,7 @@ export const validateInputs = async (inputBody) => {
                         case "float":
                             if(isNumber(input)) {
                                 //Do nothing;
-                            } else if(input === '' && ) {
+                            } else if(input === '') {
                                 valid = false;
                             } else {
                                 valid = false;
