@@ -78,8 +78,8 @@ export const validateInputs = async (inputBody: any, config: ConfigData) => {
                         if(!eachfield.field_options_createable) {
                             let options = eachfield.field_options;
                             inputComponents.forEach((inputStr: string) => {
-                                console.log("Custom value not allowed. " + eachfield.field_name);
                                 if(options && options.indexOf(inputStr) === -1) {
+                                    console.log("Custom value not allowed. " + eachfield.field_name);
                                     valid = false;
                                 }
                             })
